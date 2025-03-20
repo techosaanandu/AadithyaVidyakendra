@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 
 const schools = [
-  { value: "sree_sree_academy", label: "Sree Sree Acadamy,Ezhukone" },
+  { value: "sri_sri_academy", label: "Sri Sri Acadamy,Ezhukone" },
   // { value: "school_b", label: "School B" },
   // { value: "school_c", label: "School C" },
   // { value: "school_d", label: "School D" },
