@@ -53,7 +53,7 @@ const SearchFilter = ({ onSelectSchool }) => {
           setSelectedSchool(null);
         }}
         onFocus={() => setIsOpen(true)}
-        className="w-full border border-white/30 p-3 rounded-lg shadow-sm text-black
+        className="w-full border border-white/30 p-3 rounded-lg shadow-sm text-white
         focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
       />
       {isOpen && (
