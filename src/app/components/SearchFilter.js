@@ -1,11 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 
 const schools = [
-  // { value: "sri_sri_academy", label: "Sri Sri Acadamy,Ezhukone" },
-  { value: "Karickam_International_Public_School", label: "Karickam International Public School" },
-  // { value: "school_c", label: "School C" },
-  // { value: "school_d", label: "School D" },
-  // { value: "school_e", label: "School E" },
+  { value: "sri_sri_academy", label: "Sri Sri Acadamy,Ezhukone" },
+
 ];
 
 const SearchFilter = ({ onSelectSchool }) => {

@@ -279,33 +279,83 @@ export default function Downloader() {
   const [studentRoll, setStudentRoll] = useState("");
   const [downloadLinks, setDownloadLinks] = useState([]);
 
+  // const fetchAvailablePdfs = async () => {
+  //   if (!selectedSchool || !studentClass || !studentRoll || !studentName) {
+  //     toast.warning("Please fill in all fields before searching!");
+  //     return;
+  //   }
+
+  //   try {
+  //     const folderPath = `${selectedSchool.value}`;
+  //     const fileName = `${studentName}-${studentClass}-${studentRoll}.pdf`;
+
+  //     const { data, error } = await supabase.storage
+  //       .from("pdfs")
+  //       .list(folderPath, { search: fileName });
+
+  //     if (error || !data.length) {
+  //       toast.error("No PDFs found for the given details.");
+  //       setDownloadLinks([]);
+  //       return;
+  //     }
+
+  //     const baseUrl = `https://ferroynnuxmgpchfivdm.supabase.co/storage/v1/object/public/pdfs`;
+
+  //     const downloadLinks = data.map((file) => ({
+  //       name: file.name,
+  //       url: `${baseUrl}/${folderPath}/${file.name}`,
+  //     }));
+
+  //     setDownloadLinks(downloadLinks);
+  //     toast.success("PDFs found successfully!");
+  //   } catch (error) {
+  //     toast.error("Error fetching PDFs. Please try again.");
+  //     setDownloadLinks([]);
+  //   }
+  // };
   const fetchAvailablePdfs = async () => {
     if (!selectedSchool || !studentClass || !studentRoll || !studentName) {
       toast.warning("Please fill in all fields before searching!");
       return;
     }
-
+  
     try {
       const folderPath = `${selectedSchool.value}`;
       const fileName = `${studentName}-${studentClass}-${studentRoll}.pdf`;
-
-      const { data, error } = await supabase.storage
-        .from("pdfs")
-        .list(folderPath, { search: fileName });
-
-      if (error || !data.length) {
+      let allFiles = [];
+      let offset = 0;
+      const limit = 100;
+  
+      while (true) {
+        const { data, error } = await supabase.storage.from("pdfs").list(folderPath, {
+          limit,
+          offset,
+          search: fileName,
+        });
+  
+        if (error) {
+          toast.error("Error fetching PDFs. Please try again.");
+          setDownloadLinks([]);
+          return;
+        }
+  
+        allFiles = allFiles.concat(data);
+        if (data.length < limit) break;
+        offset += limit;
+      }
+  
+      if (!allFiles.length) {
         toast.error("No PDFs found for the given details.");
         setDownloadLinks([]);
         return;
       }
-
+  
       const baseUrl = `https://ferroynnuxmgpchfivdm.supabase.co/storage/v1/object/public/pdfs`;
-
-      const downloadLinks = data.map((file) => ({
+      const downloadLinks = allFiles.map((file) => ({
         name: file.name,
         url: `${baseUrl}/${folderPath}/${file.name}`,
       }));
-
+  
       setDownloadLinks(downloadLinks);
       toast.success("PDFs found successfully!");
     } catch (error) {
