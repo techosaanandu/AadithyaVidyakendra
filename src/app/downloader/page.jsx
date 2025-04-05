@@ -385,7 +385,7 @@ export default function Downloader() {
           onChange={(e) => setStudentClass(e.target.value)}
         >
           <option className="text-black" value="">Select Class</option>
-          {["LKG","UKG","I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XII"].map((cls) => (
+          {["I", "II", "III", "IV", "V", "VI"].map((cls) => (
             <option key={cls} value={cls} className="text-black" >{cls}</option>
           ))}
         </select>
